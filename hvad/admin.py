@@ -18,7 +18,7 @@ from django.template import TemplateDoesNotExist
 from django.template.loader import select_template
 from django.utils.encoding import iri_to_uri, force_str
 from functools import partial
-from django.utils.translation import ugettext_lazy as _, get_language, get_language_info
+from django.utils.translation import gettext_lazy as _, get_language, get_language_info
 from hvad.compat import urlencode, urlparse
 from hvad.forms import TranslatableModelForm, translatable_inlineformset_factory, translatable_modelform_factory
 from hvad.settings import hvad_settings

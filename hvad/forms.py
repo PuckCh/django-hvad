@@ -6,7 +6,7 @@ from django.forms.models import (BaseModelForm, ModelFormMetaclass,
     modelform_factory, inlineformset_factory, ALL_FIELDS)
 from django.forms.utils import ErrorList
 from django.forms.widgets import Select
-from django.utils.translation import get_language, ugettext as _
+from django.utils.translation import get_language, gettext as _
 from hvad.compat import with_metaclass
 from hvad.models import TranslatableModel, BaseTranslationModel
 from hvad.settings import hvad_settings

@@ -74,7 +74,7 @@ How about multilingual URI?
 We will assume the URI we want to be multilingual are made of two kind of components:
 static components, and dynamic components. We want to translate both kind:
 
-- Static components, through :func:`~django.utils.translation.ugettext_lazy`.
+- Static components, through :func:`~django.utils.translation.gettext_lazy`.
 - Dynamic components, from our translatable models.
 
 Static components
@@ -88,10 +88,10 @@ involve hvad, so this will be a short guide. It requires the
 
 With this middleware active, each request will set a current language before
 looking up the URI in your ``urlconf.py``. This makes it possible to use
-:func:`~django.utils.translation.ugettext_lazy` in your patterns, like this::
+:func:`~django.utils.translation.gettext_lazy` in your patterns, like this::
 
     from django.conf.urls import url
-    from django.utils.translation import ugettext_lazy as _
+    from django.utils.translation import gettext_lazy as _
 
     urlpatterns = [
         url(_(r'^en/news/(?P<year>[0-9]{4})/(?P<month>[0-9]{2})/(?P<slug>.*)'),
