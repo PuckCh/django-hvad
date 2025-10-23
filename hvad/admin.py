@@ -17,7 +17,7 @@ from django.shortcuts import render
 from django.template import TemplateDoesNotExist
 from django.template.loader import select_template
 from django.utils.encoding import iri_to_uri, force_str
-from django.utils.functional import curry
+from functools import partial
 from django.utils.translation import ugettext_lazy as _, get_language, get_language_info
 from hvad.compat import urlencode, urlparse
 from hvad.forms import TranslatableModelForm, translatable_inlineformset_factory, translatable_modelform_factory
@@ -154,7 +154,7 @@ class TranslatableAdmin(ModelAdmin, TranslatableModelAdminMixin):
             tuple(kwargs.pop("exclude", ())) +
             tuple(self.get_readonly_fields(request, obj) or ())
         )
-        old_formfield_callback = curry(self.formfield_for_dbfield, request=request)
+        old_formfield_callback = partial(self.formfield_for_dbfield, request=request)
         defaults = {
             "form": self.form,
             "fields": fields,
@@ -381,7 +381,7 @@ class TranslatableInlineModelAdmin(InlineModelAdmin, TranslatableModelAdminMixin
             "fk_name": self.fk_name,
             "fields": fields,
             "exclude": exclude or None,
-            "formfield_callback": curry(self.formfield_for_dbfield, request=request),
+            "formfield_callback": partial(self.formfield_for_dbfield, request=request),
             "extra": self.extra,
             "max_num": self.max_num,
             "can_delete": self.can_delete,
@@ -416,7 +416,7 @@ class TranslatableInlineModelAdmin(InlineModelAdmin, TranslatableModelAdminMixin
             tuple(kwargs.pop("exclude", ())) +
             self.get_readonly_fields(request, obj)
         )
-        old_formfield_callback = curry(self.formfield_for_dbfield, request=request)
+        old_formfield_callback = partial(self.formfield_for_dbfield, request=request)
         defaults = {
             "form": self.form,
             "fields": fields,
