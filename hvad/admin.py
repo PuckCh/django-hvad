@@ -16,7 +16,7 @@ from django.http import Http404, HttpResponseRedirect, QueryDict
 from django.shortcuts import render
 from django.template import TemplateDoesNotExist
 from django.template.loader import select_template
-from django.utils.encoding import iri_to_uri, force_text
+from django.utils.encoding import iri_to_uri, force_str
 from django.utils.functional import curry
 from django.utils.translation import ugettext_lazy as _, get_language, get_language_info
 from hvad.compat import urlencode, urlparse
@@ -241,14 +241,14 @@ class TranslatableAdmin(ModelAdmin, TranslatableModelAdminMixin):
         if request.POST: # The user has already confirmed the deletion.
             if perms_needed:
                 raise PermissionDenied
-            obj_display = u'%s translation of %s' % (force_text(lang), force_text(obj.master))
+            obj_display = u'%s translation of %s' % (force_str(lang), force_str(obj.master))
             self.log_deletion(request, obj, obj_display)
             self.delete_model_translation(request, obj)
 
             self.message_user(request,
                 _(u'The %(name)s "%(obj)s" was deleted successfully.') % {
-                    'name': force_text(opts.verbose_name),
-                    'obj': force_text(obj_display)
+                    'name': force_str(opts.verbose_name),
+                    'obj': force_str(obj_display)
                 }
             )
 
@@ -256,7 +256,7 @@ class TranslatableAdmin(ModelAdmin, TranslatableModelAdminMixin):
                 return HttpResponseRedirect(self.reverse('admin:index'))
             return HttpResponseRedirect(self.reverse('admin:%s_%s_changelist' % (opts.app_label, opts.model_name)))
 
-        object_name = _(u'%s Translation') % force_text(opts.verbose_name)
+        object_name = _(u'%s Translation') % force_str(opts.verbose_name)
 
         if perms_needed or protected:
             title = _(u"Cannot delete %(name)s") % {"name": object_name}
@@ -292,7 +292,7 @@ class TranslatableAdmin(ModelAdmin, TranslatableModelAdminMixin):
                 'opts': opts,
                 'app_label': opts.app_label,
                 'language_name': get_language_info(language_code)['name_local'],
-                'object_name': force_text(opts.verbose_name),
+                'object_name': force_str(opts.verbose_name),
             },
         )
         
